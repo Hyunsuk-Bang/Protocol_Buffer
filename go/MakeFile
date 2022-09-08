@@ -1,0 +1,14 @@
+PACKAGE=$(shell head -1 go.mod | awk '{print $$2}')
+
+generate: 
+	protoc --go_out=. --go_opt=module=${PACKAGE} ./proto/*.proto 
+
+
+build:
+	generate
+	go build .
+
+print: 
+	echo "$(PACKAGE)"
+
+.PHONY: generate, build, print
